@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients — RBK Precision</title>
+    <meta name="description" content="RBK Precision trusted clients — GEA Westfalia, Grotek, EXA Thermometrics, Automed Systems and more. Precision CNC machining for industry leaders.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* ── CLIENT SHOWCASE ──────────────────────── */
+        .client-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+        }
+        .client-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 48px 40px;
+            transition: background var(--t);
+            position: relative;
+            overflow: hidden;
+        }
+        .client-card:hover { background: #181818; }
+        .client-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--yellow);
+            transition: height 0.4s ease;
+        }
+        .client-card:hover::before { height: 100%; }
+        .client-index {
+            font-family: var(--font-disp);
+            font-size: 11px;
+            color: var(--yellow);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .client-name {
+            font-family: var(--font-disp);
+            font-size: clamp(22px, 3vw, 36px);
+            line-height: 1.05;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        .client-sector {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--yellow);
+            border: 1px solid rgba(245,230,66,0.3);
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+        .client-desc {
+            font-size: 13px;
+            color: rgba(240,237,230,0.55);
+            line-height: 1.75;
+        }
+
+        /* ── WHAT WE SUPPLY ──────────────────────── */
+        .supply-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        /* ── TRUST FACTORS ────────────────────────── */
+        .trust-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+        .trust-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 40px 36px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            transition: background var(--t);
+        }
+        .trust-item:hover { background: #181818; }
+        .trust-icon {
+            font-family: var(--font-disp);
+            font-size: 40px;
+            line-height: 1;
+            color: var(--yellow);
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+        .trust-text h4 {
+            font-family: var(--font-disp);
+            font-size: 22px;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .trust-text p {
+            font-size: 13px;
+            color: rgba(240,237,230,0.55);
+            line-height: 1.7;
+        }
+
+        /* ── STATS BAND ──────────────────────────── */
+        .stats-band {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .band-stat {
+            padding: 48px 32px;
+            border-right: 1px solid var(--border);
+            text-align: center;
+        }
+        .band-stat:last-child { border-right: none; }
+        .band-num {
+            font-family: var(--font-disp);
+            font-size: clamp(40px, 5vw, 64px);
+            line-height: 1;
+            color: var(--yellow);
+            display: block;
+        }
+        .band-label {
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 8px;
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .client-showcase { grid-template-columns: 1fr; }
+            .supply-grid { grid-template-columns: repeat(2,1fr); }
+            .trust-row { grid-template-columns: 1fr; }
+            .stats-band { grid-template-columns: repeat(2, 1fr); }
+            .band-stat:nth-child(2) { border-right: none; }
+            .band-stat:nth-child(3) { border-right: 1px solid var(--border); }
+            .band-stat:nth-child(3), .band-stat:nth-child(4) { border-top: 1px solid var(--border); }
+        }
+        @media (max-width: 768px) {
+            .supply-grid { grid-template-columns: 1fr; }
+            .stats-band { grid-template-columns: repeat(2,1fr); }
+            .client-card { padding: 36px 28px; }
+            .trust-item { padding: 28px 24px; }
+        }
+        @media (max-width: 480px) {
+            .stats-band { grid-template-columns: 1fr; }
+            .band-stat { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+<section class="page-hero">
+    <h1>Trusted by<br><em>Industry Leaders</em></h1>
+    <p>Our commitment to precision, quality, and on-time delivery has earned us long-term partnerships with leading organisations across sectors.</p>
+</section>
+
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>GEA Westfalia ✦</span><span>Grotek Enterprise ✦</span>
+        <span>EXA Thermometrics ✦</span><span>Automed Systems ✦</span>
+        <span>M-Two Precision ✦</span><span>Bangalore Gauges ✦</span>
+        <span>GEA Westfalia ✦</span><span>Grotek Enterprise ✦</span>
+    </div>
+</div>
+
+<!-- ── CLIENTS ─────────────────────────────── -->
+<section class="section">
+    <div class="section-label"><span class="sec-num">01</span><span class="sec-title">Our Clients</span></div>
+    <h2 class="section-h2">Companies that rely on us for <em>their most critical components.</em></h2>
+
+    <div class="client-showcase">
+        <div class="client-card">
+            <span class="client-index">01 /</span>
+            <h3 class="client-name">GEA Westfalia Separator<br>India Pvt. Ltd.</h3>
+            <span class="client-sector">Separation Technology</span>
+            <p class="client-desc">A global leader in mechanical separation and process technology. We supply precision-machined components for their separator systems — built to exacting tolerances for reliable performance in demanding industrial environments.</p>
+        </div>
+        <div class="client-card">
+            <span class="client-index">02 /</span>
+            <h3 class="client-name">Grotek Enterprise<br>Pvt. Ltd.</h3>
+            <span class="client-sector">Industrial Engineering</span>
+            <p class="client-desc">A trusted name in industrial engineering solutions. RBK Precision supplies high-accuracy turned and milled components supporting their product lines — delivered consistently on schedule and to spec.</p>
+        </div>
+        <div class="client-card">
+            <span class="client-index">03 /</span>
+            <h3 class="client-name">EXA Thermometrics<br>(India) Pvt. Ltd.</h3>
+            <span class="client-sector">Temperature Sensing</span>
+            <p class="client-desc">Manufacturers of precision temperature sensing and measurement instruments. We produce tight-tolerance stainless steel components for their sensor assemblies where dimensional accuracy directly impacts measurement reliability.</p>
+        </div>
+        <div class="client-card">
+            <span class="client-index">04 /</span>
+            <h3 class="client-name">Automed Systems<br>Pvt. Ltd.</h3>
+            <span class="client-sector">Automation</span>
+            <p class="client-desc">Specialists in industrial automation systems. RBK supplies precision-machined parts for their automated assemblies — components that demand consistent repeatability and tight geometric tolerances across high-volume runs.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── STATS BAND ─────────────────────────── -->
+<div class="stats-band">
+    <div class="band-stat">
+        <span class="band-num">5+</span>
+        <span class="band-label">Active Client<br>Partnerships</span>
+    </div>
+    <div class="band-stat">
+        <span class="band-num">6+</span>
+        <span class="band-label">Industries<br>Served</span>
+    </div>
+    <div class="band-stat">
+        <span class="band-num">24h</span>
+        <span class="band-label">Quote<br>Response Time</span>
+    </div>
+    <div class="band-stat">
+        <span class="band-num">100%</span>
+        <span class="band-label">Parts Inspected<br>Before Despatch</span>
+    </div>
+</div>
+
+<!-- ── WHAT WE SUPPLY ──────────────────────── -->
+<section class="section alt">
+    <div class="section-label"><span class="sec-num">02</span><span class="sec-title">What We Supply</span></div>
+    <h2 class="section-h2">A broad range of precision parts <em>for every application.</em></h2>
+    <div class="supply-grid">
+        <div class="card">
+            <span class="card-num">— Turned Parts</span>
+            <h3>CNC Turned Components <span class="arr">↗</span></h3>
+            <p>Shafts, bushings, flanges, connectors, and rotational components machined to ±0.01mm from steel, stainless, aluminium, brass, and titanium.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Milled Parts</span>
+            <h3>VMC Milled Components <span class="arr">↗</span></h3>
+            <p>Prismatic and contoured parts, housings, brackets, plates, and complex geometries produced on our BFW BMV Pro VMC with superior surface finish.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Sub-Assemblies</span>
+            <h3>Machined Sub-Assemblies <span class="arr">↗</span></h3>
+            <p>Multi-part machined assemblies with matched tolerances, ready for integration into your production line — reducing your internal handling and inspection steps.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Prototypes</span>
+            <h3>Prototype & First Articles <span class="arr">↗</span></h3>
+            <p>Rapid first-article samples for design validation with full dimensional reports. Transition seamlessly to production volumes once approved — same machines, same quality.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Replacement</span>
+            <h3>Reverse-Engineered Parts <span class="arr">↗</span></h3>
+            <p>Obsolete or undocumented components recreated with enhanced accuracy and material strength. Ideal for maintenance, repair, and overhaul programmes.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— High-Volume</span>
+            <h3>Production Runs <span class="arr">↗</span></h3>
+            <p>From short-run batches to high-volume repeat orders — our robotic automation and streamlined workflows ensure consistent quality at every quantity.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── WHY TRUST US ────────────────────────── -->
+<section class="section">
+    <div class="section-label"><span class="sec-num">03</span><span class="sec-title">Why Customers Trust Us</span></div>
+    <h2 class="section-h2">Four reasons clients come back <em>again and again.</em></h2>
+    <div class="trust-row">
+        <div class="trust-item">
+            <div class="trust-icon">◎</div>
+            <div class="trust-text">
+                <h4>Precision &amp; Reliability</h4>
+                <p>Tight tolerances and superior quality on every part, every time. Our ISO 9001:2015 certified processes mean nothing leaves our facility without meeting exact specifications.</p>
+            </div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon">◷</div>
+            <div class="trust-text">
+                <h4>On-Time Delivery</h4>
+                <p>Dependable and punctual service backed by streamlined production workflows and smart scheduling. Your deadlines are our deadlines.</p>
+            </div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon">◈</div>
+            <div class="trust-text">
+                <h4>Customised Solutions</h4>
+                <p>No two projects are the same. We work closely with you to understand your exact requirements and deliver bespoke machining solutions tailored precisely to your needs.</p>
+            </div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon">◉</div>
+            <div class="trust-text">
+                <h4>Partnership Approach</h4>
+                <p>We build long-term, healthy customer relationships through proactive communication, real-time updates, and a genuine commitment to your success — not just your order.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA ─────────────────────────────────── -->
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Join our growing list of <em>satisfied clients.</em></h2>
+        <div class="cta-links">
+            <a href="mailto:rbkprecision@gmail.com" class="cta-email">rbkprecision@gmail.com ↗</a>
+            <a href="contact.html" class="cta-btn">Send your drawing →</a>
+        </div>
+        <div class="cta-assurances">
+            <span>Reply within 24 hours</span>
+            <span>Fixed quotation — no hidden costs</span>
+            <span>First article inspection guaranteed</span>
+        </div>
+    </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>

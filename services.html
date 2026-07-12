@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services — RBK Precision</title>
+    <meta name="description" content="RBK Precision services — CNC Turning, VMC Milling, Custom Machining, Prototyping, Reverse Engineering, Secondary Operations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
+    <style>
+        .services-full { display: flex; flex-direction: column; gap: 0; }
+        .service-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            padding: 48px 0;
+            align-items: start;
+        }
+        .service-row:first-child { padding-top: 0; }
+        .svc-num {
+            font-family: var(--font-disp);
+            font-size: 13px; color: var(--yellow);
+            letter-spacing: 2px; padding-top: 4px;
+        }
+        .svc-main {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .svc-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 28px;
+        }
+        .svc-name {
+            font-family: var(--font-disp);
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1.05;
+        }
+        .svc-name em { display: block; font-size: 0.55em; color: var(--muted); margin-top: 6px; font-style: normal; font-family: var(--font-ui); font-weight: 500; letter-spacing: 0; }
+        .svc-detail p { font-size: 14px; color: rgba(240,237,230,0.65); line-height: 1.8; margin-bottom: 16px; }
+        .svc-detail .card-tags { margin-top: 4px; }
+
+        /* ── IMAGE SLIDER ─────────────────────────── */
+        .svc-slider {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #0d0d0d;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        .svc-slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+        }
+        .svc-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0d0d0d;
+        }
+        .svc-slide img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(10%) contrast(1.05);
+        }
+        .svc-slide-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0e0e0e 0%, #161616 50%, #0e0e0e 100%);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 12px;
+        }
+        .svc-slide-placeholder span {
+            font-family: var(--font-disp);
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: rgba(245,230,66,0.25);
+        }
+        .svc-slide-placeholder .slide-num {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(240,237,230,0.15);
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.65);
+            border: 1px solid rgba(245,230,66,0.25);
+            color: var(--yellow);
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+            transition: background 0.2s, border-color 0.2s;
+            z-index: 2;
+            line-height: 1;
+            padding: 0;
+        }
+        .slider-btn:hover { background: rgba(245,230,66,0.15); border-color: rgba(245,230,66,0.6); }
+        .slider-btn.prev { left: 12px; }
+        .slider-btn.next { right: 12px; }
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 2;
+        }
+        .slider-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: rgba(245,230,66,0.3);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .slider-dot.active {
+            background: var(--yellow);
+            transform: scale(1.3);
+        }
+
+        /* ── ISO BADGE BELOW LOGO ─────────────────── */
+        .nav-iso-badge {
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--yellow);
+            border: 1px solid rgba(245,230,66,0.35);
+            padding: 3px 8px;
+            border-radius: 2px;
+            display: block;
+            text-align: center;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+        .nav-logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .machines-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 0; }
+        .machine-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 32px 28px;
+        }
+        .machine-card h4 { font-family: var(--font-disp); font-size: 22px; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .machine-card .spec { font-size: 13px; color: var(--yellow); font-family: var(--font-ui); font-weight: 600; margin-bottom: 10px; display: block; }
+        .machine-card p { font-size: 13px; color: rgba(240,237,230,0.6); line-height: 1.7; }
+
+        @media (max-width: 768px) {
+            .service-row { grid-template-columns: 1fr; gap: 12px; }
+            .svc-top { grid-template-columns: 1fr; gap: 20px; }
+            .machines-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="page-hero">
+    <h1>Our<br><em>Services</em></h1>
+    <p>Comprehensive precision machining services to meet the most demanding industry requirements. From prototype to production.</p>
+</section>
+
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>CNC Turning ✦</span><span>VMC Milling ✦</span><span>Prototyping ✦</span>
+        <span>Reverse Engineering ✦</span><span>Custom Machining ✦</span><span>Secondary Operations ✦</span>
+        <span>Quality Assurance ✦</span><span>Short &amp; High-Volume ✦</span>
+        <span>CNC Turning ✦</span><span>VMC Milling ✦</span><span>Prototyping ✦</span>
+        <span>Reverse Engineering ✦</span><span>Custom Machining ✦</span><span>Secondary Operations ✦</span>
+        <span>Quality Assurance ✦</span><span>Short &amp; High-Volume ✦</span>
+    </div>
+</div>
+
+<!-- Services list -->
+<section class="section">
+    <div class="section-label"><span class="sec-num">01</span><span class="sec-title">All Services</span></div>
+    <div class="services-full">
+
+        <div class="service-row">
+            <span class="svc-num">01 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Precision CNC Turning<em>High-accuracy turning</em></div>
+                    <div class="svc-slider" data-slider="1">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 1.png" alt=""></span><span class="slide-num">CNC TURNING / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 2.png" alt=""></span><span class="slide-num">CNC TURNING / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 3.png" alt=""></span><span class="slide-num">CNC TURNING / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 4.png" alt=""></span><span class="slide-num">CNC TURNING / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 5.png" alt=""></span><span class="slide-num">CNC TURNING / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 6.png" alt=""></span><span class="slide-num">CNC TURNING / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 7.png" alt=""></span><span class="slide-num">CNC TURNING / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 8.png" alt=""></span><span class="slide-num">CNC TURNING / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 9.png" alt=""></span><span class="slide-num">CNC TURNING / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/1. Precision CNC Turning/Image 10.png" alt=""></span><span class="slide-num">CNC TURNING / 10 of 10</span></div></div>
+                        </div>
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>High-accuracy turning using advanced CNC machines — ideal for producing complex tight-tolerance components with consistent quality and a wide range of materials.</p>    
+                    <div class="card-tags"><span>Steel</span><span>Stainless Steel</span><span>Aluminium</span><span>Brass</span><span>Tolerance: ±0.01mm</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">02 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">VMC Milling<em>Vertical machining · 3-axis</em></div>
+                    <div class="svc-slider" data-slider="2">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 1.png" alt=""></span><span class="slide-num">VMC MILLING / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 2.png" alt=""></span><span class="slide-num">VMC MILLING / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 3.png" alt=""></span><span class="slide-num">VMC MILLING / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 4.png" alt=""></span><span class="slide-num">VMC MILLING / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 5.png" alt=""></span><span class="slide-num">VMC MILLING / 5 of 10</span></div></div> 
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 6.png" alt=""></span><span class="slide-num">VMC MILLING / 6 of 10</span></div></div> 
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 7.png" alt=""></span><span class="slide-num">VMC MILLING / 7 of 10</span></div></div> 
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 8.png" alt=""></span><span class="slide-num">VMC MILLING / 8 of 10</span></div></div> 
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 9.png" alt=""></span><span class="slide-num">VMC MILLING / 9 of 10</span></div></div> 
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/2. VMC Milling/Image 10.png" alt=""></span><span class="slide-num">VMC MILLING / 10 of 10</span></div></div> 
+                        </div>
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Advanced milling for intricate designs on a Vertical Machining Centre. 3-axis operations for prismatic and contoured components with superior surface finish.</p>
+                    <div class="card-tags"><span>Steel</span><span>Stainless Steel</span><span>Aluminium</span><span>Brass</span><span>Tolerance: ±0.01mm</span><span>Contouring</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">03 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Custom Machining<em>Bespoke · Tailored solutions</em></div>
+                    <div class="svc-slider" data-slider="3">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 1.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 2.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 3.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 4.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 5.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 6.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 7.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 8.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 9.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/3. Custom Machining/Image 10.png" alt=""></span><span class="slide-num">CUSTOM MACHINING / 10 of 10</span></div></div>
+                        </div>
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Bespoke machining solutions tailored to your specific needs. Whether you need one-off custom parts or specialised components, we work closely with you to deliver exactly what you need.</p>
+                    <div class="card-tags"><span>Bespoke</span><span>One-off</span><span>Specialised</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">04 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Prototyping<em>Rapid development · New concepts</em></div>
+                    <div class="svc-slider" data-slider="4">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 1.png" alt=""></span><span class="slide-num">PROTOTYPING / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 2.png" alt=""></span><span class="slide-num">PROTOTYPING / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 3.png" alt=""></span><span class="slide-num">PROTOTYPING / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 4.png" alt=""></span><span class="slide-num">PROTOTYPING / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 5.png" alt=""></span><span class="slide-num">PROTOTYPING / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 6.png" alt=""></span><span class="slide-num">PROTOTYPING / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 7.png" alt=""></span><span class="slide-num">PROTOTYPING / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 8.png" alt=""></span><span class="slide-num">PROTOTYPING / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 9.png" alt=""></span><span class="slide-num">PROTOTYPING / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/4. Prototyping/Image 10.png" alt=""></span><span class="slide-num">PROTOTYPING / 10 of 10</span></div></div>
+                        </div>                                                                                                                                   
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Rapid development for new concepts. Whether you need a quick prototype to validate your design or a pre-production sample for approval, we deliver fast without compromising precision.</p>
+                    <div class="card-tags"><span>Rapid Prototype</span><span>Design Validation</span><span>Fast Lead Time</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">05 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Short &amp; High-Volume Production<em>Flexible · Scalable manufacturing</em></div>
+                    <div class="svc-slider" data-slider="5">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 1.png" alt=""></span><span class="slide-num">PRODUCTION / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 2.png" alt=""></span><span class="slide-num">PRODUCTION / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 3.png" alt=""></span><span class="slide-num">PRODUCTION / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 4.png" alt=""></span><span class="slide-num">PRODUCTION / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 5.png" alt=""></span><span class="slide-num">PRODUCTION / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 6.png" alt=""></span><span class="slide-num">PRODUCTION / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 7.png" alt=""></span><span class="slide-num">PRODUCTION / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 8.png" alt=""></span><span class="slide-num">PRODUCTION / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 9.png" alt=""></span><span class="slide-num">PRODUCTION / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/5. Short & High-Volume Production/Image 10.png" alt=""></span><span class="slide-num">PRODUCTION / 10 of 10</span></div></div>
+                        </div>                                                                                                                              
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Whether you need rapid, low-quantity prototypes or full-scale production, our flexible manufacturing systems adapt to meet your volume and timeline without sacrificing quality.</p>
+                    <div class="card-tags"><span>Low-Qty</span><span>High-Volume</span><span>Flexible</span><span>On-Time</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">06 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Reverse Engineering<em>Recreate · Enhance · Improve</em></div>
+                    <div class="svc-slider" data-slider="6">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 1.png" alt=""></span><span class="slide-num">REVERSE ENG. / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 2.png" alt=""></span><span class="slide-num">REVERSE ENG. / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 3.png" alt=""></span><span class="slide-num">REVERSE ENG. / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 4.png" alt=""></span><span class="slide-num">REVERSE ENG. / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 5.png" alt=""></span><span class="slide-num">REVERSE ENG. / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 6.png" alt=""></span><span class="slide-num">REVERSE ENG. / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 7.png" alt=""></span><span class="slide-num">REVERSE ENG. / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 8.png" alt=""></span><span class="slide-num">REVERSE ENG. / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 9.png" alt=""></span><span class="slide-num">REVERSE ENG. / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/6. Reverse Engineering/Image 10.png" alt=""></span><span class="slide-num">REVERSE ENG. / 10 of 10</span></div></div>
+                        </div>                                                                                                                                        
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>We specialise in recreating existing parts with enhanced accuracy, performance, and material strength — ideal for obsolete or undocumented components where original drawings no longer exist.</p>
+                    <div class="card-tags"><span>Obsolete Parts</span><span>Re-engineering</span><span>Enhanced Accuracy</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">07 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Secondary Operations<em>Post-machining · Surface finishing</em></div>
+                    <div class="svc-slider" data-slider="7">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 1.png" alt=""></span><span class="slide-num">SECONDARY OPS / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 2.png" alt=""></span><span class="slide-num">SECONDARY OPS / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 3.png" alt=""></span><span class="slide-num">SECONDARY OPS / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 4.png" alt=""></span><span class="slide-num">SECONDARY OPS / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 5.png" alt=""></span><span class="slide-num">SECONDARY OPS / 5 of 10</span></div></div>                                                                                                                   
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 6.png" alt=""></span><span class="slide-num">SECONDARY OPS / 6 of 10</span></div></div>                                                                                                                   
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 7.png" alt=""></span><span class="slide-num">SECONDARY OPS / 7 of 10</span></div></div>                                                                                                                   
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 8.png" alt=""></span><span class="slide-num">SECONDARY OPS / 8 of 10</span></div></div>                                                                                                                   
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 9.png" alt=""></span><span class="slide-num">SECONDARY OPS / 9 of 10</span></div></div>                                                                                                                   
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/7. Secondary Operations/Image 10.png" alt=""></span><span class="slide-num">SECONDARY OPS / 10 of 10</span></div></div>                                                                                                                   
+                        </div>
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Comprehensive post-machining services including turning, milling, threading, deburring, and surface finishing — customised to meet specific functional and aesthetic requirements.</p>
+                    <div class="card-tags"><span>Turning</span><span>Threading</span><span>Deburring</span><span>Surface Finish</span><span>Milling</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-row">
+            <span class="svc-num">08 /</span>
+            <div class="svc-main">
+                <div class="svc-top">
+                    <div class="svc-name">Quality Assurance<em>ISO 9001:2015 · 100% inspection</em></div>
+                    <div class="svc-slider" data-slider="8">
+                        <div class="svc-slider-track">
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 1.png" alt=""></span><span class="slide-num">QUALITY / 1 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 2.png" alt=""></span><span class="slide-num">QUALITY / 2 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 3.png" alt=""></span><span class="slide-num">QUALITY / 3 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 4.png" alt=""></span><span class="slide-num">QUALITY / 4 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 5.png" alt=""></span><span class="slide-num">QUALITY / 5 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 6.png" alt=""></span><span class="slide-num">QUALITY / 6 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 7.png" alt=""></span><span class="slide-num">QUALITY / 7 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 8.png" alt=""></span><span class="slide-num">QUALITY / 8 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 9.png" alt=""></span><span class="slide-num">QUALITY / 9 of 10</span></div></div>
+                            <div class="svc-slide"><div class="svc-slide-placeholder"><span><img src="Assets/Images/Services/8. Quality Assurance/Image 10.png" alt=""></span><span class="slide-num">QUALITY / 10 of 10</span></div></div>
+                        </div>                                                                                                               
+                        <button class="slider-btn prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-btn next" aria-label="Next">&#8594;</button>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+                <div class="svc-detail">
+                    <p>Rigorous inspection and testing adhering to ISO 9001:2015 Quality Management System requirements. Every part verified against exact specifications before despatch.</p>
+                    <div class="card-tags"><span>ISO 9001:2015</span><span>First Article</span><span>100% Inspection</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!--Materials we Machine-->
+<section class="section">
+    <div class="section-label"><span class="sec-num">05</span><span class="sec-title">Materials We Machine</span></div>
+    <h2 class="section-h2">We work across a wide range of <em>engineering materials.</em></h2>
+    <div class="grid-3">
+        <div class="card">
+            <span class="card-num">— Ferrous</span>
+            <h3>Steel &amp; Stainless <span class="arr">↗</span></h3>
+            <p>Mild steel, alloy steels, and various grades of stainless steel — the backbone of precision engineering across aerospace, automotive, and industrial applications.</p>
+            <div class="card-tags"><span>Mild Steel</span><span>SS 304</span><span>SS 316/316L</span><span>Alloy Steel</span></div>
+        </div>
+        <div class="card">
+            <span class="card-num">— Non-Ferrous</span>
+            <h3>Aluminium &amp; Brass <span class="arr">↗</span></h3>
+            <p>Lightweight aluminium alloys for aerospace and electronics, and brass for components requiring excellent machinability and corrosion resistance.</p>
+            <div class="card-tags"><span>Aluminium</span><span>Brass</span><span>Copper</span></div>
+        </div>
+        <div class="card">
+            <span class="card-num">— Specialist</span>
+            <h3>Titanium &amp; Plastics <span class="arr">↗</span></h3>
+            <p>High-strength titanium for aerospace and medical applications, and engineering plastics for components requiring lightweight construction with specific mechanical properties.</p>
+            <div class="card-tags"><span>Titanium</span><span>PEEK</span><span>Delrin</span><span>Nylon</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Ready to start<br>your <em>next project?</em></h2>
+        <div class="cta-links">
+            <a href="mailto:rbkprecision@gmail.com" class="cta-email">rbkprecision@gmail.com ↗</a>
+            <a href="contact.html" class="cta-btn">Get a Quote →</a>
+        </div>
+        <div class="cta-assurances">
+            <span>Reply within 24 hours</span>
+            <span>Fixed quotation</span>
+            <span>ISO 9001:2015 certified</span>
+        </div>
+    </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>

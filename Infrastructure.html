@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure — RBK Precision</title>
+    <meta name="description" content="RBK Precision infrastructure — CNC lathes, VMC milling centres, robotic automation, and Mitutoyo metrology instruments. State-of-the-art machining facility in Bangalore.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* ── MACHINE SHOWCASE ─────────────────────── */
+        .machine-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+        .machine-hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            transition: background var(--t);
+        }
+        .machine-hero-card:hover { background: #181818; }
+        
+        /* TARGET THE THIRD ODD CARD ONLY: 
+           Spans full grid width width-wise, but shrinks and centers itself visually */
+        .machine-hero-card:nth-child(3) {
+            grid-column: 1 / -1; 
+            width: calc(50% - 1px);
+            margin: 0 auto;
+        }
+
+        .machine-img-area {
+            aspect-ratio: 16/9;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .machine-img-area img {
+            width: 100%; height: 100%;
+            object-fit: contain; /* Keeps entire product frame visible */
+            filter: grayscale(20%) contrast(1.1);
+            transition: transform 0.6s ease;
+        }
+        .machine-hero-card:hover .machine-img-area img { transform: scale(1.04); }
+        .machine-img-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-disp);
+            font-size: 80px;
+            color: rgba(245,230,66,0.08);
+            letter-spacing: 4px;
+        }
+        .machine-info {
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .machine-brand {
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--yellow);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .machine-title {
+            font-family: var(--font-disp);
+            font-size: clamp(22px, 3vw, 34px);
+            letter-spacing: 0.5px;
+            line-height: 1.05;
+            margin-bottom: 10px;
+        }
+        .machine-spec-tag {
+            display: inline-block;
+            font-family: var(--font-ui);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--off-white);
+            background: rgba(245,230,66,0.1);
+            border: 1px solid rgba(245,230,66,0.2);
+            padding: 4px 12px;
+            border-radius: 2px;
+            margin-bottom: 14px;
+            letter-spacing: 0.06em;
+        }
+        .machine-desc {
+            font-size: 13px;
+            color: rgba(240,237,230,0.6);
+            line-height: 1.75;
+        }
+        /* ── Responsive Viewports ─────────────────── */
+        @media (max-width: 1024px) {
+            .machine-showcase { grid-template-columns: 1fr; }
+            .machine-hero-card:nth-child(3) {
+                width: 100%;
+            }
+            .facility-facts { grid-template-columns: repeat(2,1fr); }
+            .specs-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── FACILITY STATS ───────────────────────── */
+        .facility-facts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .fact-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 40px 32px;
+            position: relative;
+        }
+        .fact-num {
+            font-family: var(--font-disp);
+            font-size: clamp(44px, 6vw, 72px);
+            line-height: 1;
+            color: var(--yellow);
+            display: block;
+            margin-bottom: 10px;
+        }
+        .fact-label {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+            letter-spacing: 0.03em;
+        }
+        .fact-label strong {
+            display: block;
+            color: var(--off-white);
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        /* ── INSTRUMENTS TABLE ───────────────────── */
+        .instruments-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .instruments-table th {
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .instruments-table td {
+            padding: 18px 20px;
+            font-size: 13px;
+            color: rgba(240,237,230,0.7);
+            border-bottom: 1px solid var(--border);
+            line-height: 1.5;
+        }
+        .instruments-table tr:last-child td { border-bottom: none; }
+        .instruments-table tr:hover td { background: rgba(245,230,66,0.025); }
+        .instruments-table td:first-child {
+            font-family: var(--font-disp);
+            font-size: 15px;
+            color: var(--off-white);
+            letter-spacing: 0.5px;
+        }
+        .instruments-table td .inst-brand {
+            font-family: var(--font-ui);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--yellow);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .range-badge {
+            font-family: var(--font-ui);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 3px 10px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        /* ── CAPABILITY SPECS ─────────────────────── */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+        }
+        .spec-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 40px 36px;
+        }
+        .spec-block h4 {
+            font-family: var(--font-disp);
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: var(--off-white);
+        }
+        .specs-grid .spec-block {
+            text-align: left; /* Keep detailed tracking alignments readable */
+        }
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            gap: 16px;
+        }
+        .spec-row:last-child { border-bottom: none; }
+        .spec-key {
+            font-size: 12px;
+            color: var(--muted);
+            font-family: var(--font-ui);
+            letter-spacing: 0.04em;
+        }
+        .spec-val {
+            font-family: var(--font-disp);
+            font-size: 16px;
+            color: var(--yellow);
+            letter-spacing: 0.5px;
+            text-align: right;
+        }
+
+        /* ── ISO BAND ─────────────────────────────── */
+        .iso-band {
+            background: var(--yellow);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .iso-band h3 {
+            font-family: var(--font-disp);
+            font-size: clamp(24px, 4vw, 48px);
+            color: #000;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+        .iso-band p {
+            font-family: var(--font-ui);
+            font-size: 14px;
+            color: rgba(0,0,0,0.6);
+            max-width: 480px;
+        }
+        .iso-cert-badge {
+            font-family: var(--font-disp);
+            font-size: 13px;
+            letter-spacing: 2px;
+            background: #000;
+            color: var(--yellow);
+            padding: 14px 28px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity var(--t), transform var(--t);
+        }
+        .iso-cert-badge:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .machine-showcase { 
+                grid-template-columns: 1fr; 
+                max-width: 650px;
+                margin: 0 auto;
+            }
+            .facility-facts { grid-template-columns: repeat(2,1fr); }
+            .specs-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .facility-facts { grid-template-columns: 1fr; }
+            .iso-band { flex-direction: column; align-items: flex-start; }
+            .instruments-table { font-size: 12px; }
+            .instruments-table th, .instruments-table td { padding: 12px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="page-hero">
+    <h1>Our<br><em>Infrastructure</em></h1>
+    <p>Advanced manufacturing infrastructure with cutting-edge CNC and VMC technology for precision engineering</p>
+</section>
+
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>LMW CNC Turning ✦</span><span>ACE Micromatic Turning ✦</span><span>VMC BFW BMV Pro ✦</span>
+        <span>Live Tooling ✦</span><span>C-Axis Machining ✦</span>
+        <span>ISO 9001:2015 ✦</span>
+        <span>LMW CNC Turning ✦</span><span>ACE Micromatic Turning ✦</span><span>VMC BFW BMV Pro ✦</span>
+        <span>Live Tooling ✦</span><span>C-Axis Machining ✦</span>
+        <span>ISO 9001:2015 ✦</span>
+    </div>
+</div>
+
+<section class="section">
+    <div class="section-label"><span class="sec-num">01</span><span class="sec-title">Our Machines</span></div>
+    <h2 class="section-h2">Advanced machining technology for <em>complex, tight-tolerance work.</em></h2>
+
+    <div class="machine-showcase">
+        <div class="machine-hero-card">
+            <div class="machine-img-area">
+                <div class="machine-img-placeholder">
+                    <img src="Assets/Images/Infrastructure/CNC Machine.png" alt="LMW CNC Turning Centre">
+                </div>
+            </div>
+            <div class="machine-info">
+                <span class="machine-brand">Turning Centre</span>
+                <h3 class="machine-title">CNC Turning — LMW</h3>
+                <span class="machine-spec-tag">DIA 200 × 500 mm (X, Z)</span>
+                <p class="machine-desc">CNC turning centres capable of precision turning in a single setup. Ideal for producing complex components with consistent quality across both short and high-volume production runs.</p>
+            </div>
+        </div>
+        <div class="machine-hero-card">
+            <div class="machine-img-area">
+                <div class="machine-img-placeholder">
+                    <img src="Assets/Images/Infrastructure/VMC-BFW.png" alt="BFW BMV PRO Vertical Machining Centre">
+                </div>
+            </div>
+            <div class="machine-info">
+                <span class="machine-brand">Vertical Machining Centre</span>
+                <h3 class="machine-title">VMC Milling — BFW BMV PRO</h3>
+                <span class="machine-spec-tag">500 × 500 × 900 mm (X, Y, Z)</span>
+                <p class="machine-desc">High-rigidity vertical machining centre for 3-axis milling of prismatic and contoured parts. Superior surface finish and dimensional accuracy for intricate designs and complex geometries.</p>
+            </div>
+        </div>
+        <div class="machine-hero-card">
+            <div class="machine-img-area">
+                <div class="machine-img-placeholder">
+                    <img src="Assets/Images/Infrastructure/ACE Machine.png" alt="ACE Micromatic CNC Turning Centre">
+                </div>
+            </div>
+            <div class="machine-info">
+                <span class="machine-brand">Turning Centre</span>
+                <h3 class="machine-title">CNC Turning - ACE MICROMATIC</h3>
+                <span class="machine-spec-tag">DIA 200 × 500 mm (X, Z)</span>
+                <p class="machine-desc">Our CNC turning centres combine precision, efficiency, and repeatability to manufacture complex components in a single setup, supporting everything from prototype development to high-volume production.</p>
+            </div>  
+        </div>
+    </div>
+</section>
+
+<div class="iso-band">
+    <div>
+        <h3>ISO 9001:2015</h3>
+        <p>Quality isn't a checkpoint at RBK Precision — it's built into every stage of our manufacturing process. Our ISO 9001:2015 certification covers the full production workflow from raw material receipt to final despatch.</p>
+    </div>
+    <a href="ISO Certification.pdf" target="_blank" rel="noopener" class="iso-cert-badge">VIEW CERTIFICATE</a>
+</div>
+
+
+<section class="section">
+    <div class="section-label"><span class="sec-num">03</span><span class="sec-title">Facility At a Glance</span></div>
+    <h2 class="section-h2">Numbers that tell the story of <em>our capability.</em></h2>
+    <div class="facility-facts">
+        <div class="fact-item">
+            <span class="fact-num">±0.01</span>
+            <div class="fact-label">
+                <strong>Tolerance Capability</strong>
+                Consistent micron-level precision across all machines and materials.
+            </div>
+        </div>
+        <div class="fact-item">
+            <span class="fact-num">3</span>
+            <div class="fact-label">
+                <strong>Axis Milling</strong>
+                3-axis VMC capability for complex contoured components.
+            </div>
+        </div>
+        <div class="fact-item">
+            <span class="fact-num">10+</span>
+            <div class="fact-label">
+                <strong>Metrology Instruments</strong>
+                High Quality precision measurement Instruments.
+            </div>
+        </div>
+        <div class="fact-item">
+            <span class="fact-num">ISO</span>
+            <div class="fact-label">
+                <strong>9001:2015 Certified</strong>
+                Quality management system certified — integrated into every stage of production.
+            </div>
+        </div>
+        <div class="fact-item">
+            <span class="fact-num">25+</span>
+            <div class="fact-label">
+                <strong>Years Team Expertise</strong>
+                Combined machining and engineering experience behind every job we take.
+            </div>
+        </div>
+        <div class="fact-item">
+            <span class="fact-num">600</span>
+            <div class="fact-label">
+                <strong>mm Measurement Range</strong>
+                Our longest Vernier Caliper covers up to 600mm for large component inspection.
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section alt">
+    <div class="section-label"><span class="sec-num">02</span><span class="sec-title">Machine Specifications</span></div>
+    <h2 class="section-h2">Exact specs you can <em>plan your designs around.</em></h2>
+    <div class="specs-grid">
+        <div class="spec-block">
+            <h4>CNC Turning Centres</h4>
+            <div class="spec-row">
+                <span class="spec-key">Machine Make</span>
+                <span class="spec-val">LMW &amp; ACE Micromatic</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Max. Diameter (X)</span>
+                <span class="spec-val">200 mm</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Max. Length (Z)</span>
+                <span class="spec-val">500 mm</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Axes</span>
+                <span class="spec-val">two-Axis</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Tolerance Capability</span>
+                <span class="spec-val">±0.01 mm</span>
+            </div>
+            
+        </div>
+        <div class="spec-block">
+            <h4>Vertical Machining Centre</h4>
+            <div class="spec-row">
+                <span class="spec-key">Machine Make</span>
+                <span class="spec-val">BFW BMV PRO</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">X Travel</span>
+                <span class="spec-val">500 mm</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Y Travel</span>
+                <span class="spec-val">500 mm</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Z Travel</span>
+                <span class="spec-val">900 mm</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Axes </span>
+                <span class="spec-val">Three-Axis</span>
+            </div>
+            <div class="spec-row">
+                <span class="spec-key">Tolerance Capability</span>
+                <span class="spec-val">±0.01 mm</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section alt">
+    <div class="section-label"><span class="sec-num">04</span><span class="sec-title">Inspection &amp; Metrology</span></div>
+    <h2 class="section-h2">Every component verified using <em>Mitutoyo precision instruments.</em></h2>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); overflow: hidden; border-radius: 4px;">
+        <table class="instruments-table">
+            <thead>
+                <tr>
+                    <th>Instrument</th>
+                    <th>Measurement Range</th>
+                    <th>Application</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Digital Vernier Calliper</td>
+                    <td><span class="range-badge">0 – 200 mm</span></td>
+                    <td>External / internal diameter, depth and step measurement</td>
+                </tr>
+                <tr>
+                    <td>Digital Height Gauge</td>
+                    <td><span class="range-badge">0 – 300 mm</span></td>
+                    <td>Height and flatness verification on surface plates</td>
+                </tr>
+                <tr>
+                    <td>Digital Micrometer</td>
+                    <td><span class="range-badge">0 – 200 mm</span></td>
+                    <td>High-accuracy diameter and wall thickness measurement</td>
+                </tr>
+                <tr>
+                    <td>Mechanical Micrometer</td>
+                    <td><span class="range-badge">200 – 300 mm</span></td>
+                    <td>Large component outer diameter inspection</td>
+                </tr>
+                <tr>
+                    <td>Dial Vernier Caliper</td>
+                    <td><span class="range-badge">0 – 300 mm</span></td>
+                    <td>General-purpose dimensional inspection</td>
+                </tr>
+                <tr>
+                    <td>Vernier Caliper</td>
+                    <td><span class="range-badge">0 – 600 mm</span></td>
+                    <td>Large component measurement up to 600mm</td>
+                </tr>
+                <tr>
+                    <td>Bore Gauge</td>
+                    <td><span class="range-badge">10 – 300 mm</span></td>
+                    <td>Internal bore diameter and roundness verification</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="margin-top: 20px; font-size: 12px; color: var(--muted); font-family: var(--font-ui);">All metrology instruments are from Mitutoyo — the global benchmark in precision measurement technology. Instruments are regularly calibrated and certified.</p>
+</section>
+
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Our infrastructure is ready<br>for <em>your next project.</em></h2>
+        <div class="cta-links">
+            <a href="mailto:rbkprecision@gmail.com" class="cta-email">rbkprecision@gmail.com ↗</a>
+            <a href="contact.html" class="cta-btn">Send your drawing →</a>
+        </div>
+        <div class="cta-assurances">
+            <span>±0.01mm tolerance capability</span>
+            <span>ISO 9001:2015 certified</span>
+            <span>Full material traceability</span>
+        </div>
+    </div>
+</section>
+
+<script src="nav.js"></script>
+</body>
+</html>
