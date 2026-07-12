@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBK Precision — CNC & VMC Machining, Bangalore</title>
+    <meta name="description" content="RBK Precision — Precision CNC & VMC machining services. 25+ years expertise. ISO 9001:2015. Aerospace, Automotive, Medical. Bangalore, India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
+    <style>
+        /* ── HERO ───────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 140px 48px 64px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+        .hero-meta {
+            display: flex; gap: 20px; align-items: center; margin-bottom: 28px;
+        }
+        .hero-tag {
+            font-family: var(--font-ui);
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--yellow); border: 1px solid var(--yellow);
+            padding: 4px 10px; border-radius: 2px;
+        }
+        .hero-location { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+        .hero h1 {
+            font-family: var(--font-disp);
+            font-size: clamp(72px, 14vw, 180px);
+            line-height: 0.9;
+            letter-spacing: -1px;
+            display: flex; flex-direction: column;
+            margin-bottom: 24px;
+        }
+        .hero h1 .line1 { color: var(--off-white); }
+        .hero h1 .line2 { color: var(--yellow); }
+        .hero h1 sup { font-size: 0.22em; color: rgba(240,237,230,0.35); vertical-align: super; }
+        .hero-sub {
+            font-size: clamp(13px, 1.8vw, 16px);
+            color: var(--muted); max-width: 460px; line-height: 1.75;
+        }
+        .hero-bottom {
+            display: flex; align-items: flex-end;
+            justify-content: space-between;
+            margin-top: 60px; gap: 28px; flex-wrap: wrap;
+        }
+        .hero-stats { display: flex; gap: 44px; flex-wrap: wrap; }
+        .stat { display: flex; flex-direction: column; gap: 4px; }
+        .stat-num {
+            font-family: var(--font-disp);
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1; color: var(--off-white);
+        }
+        .stat-num em { font-style: normal; font-size: 0.5em; color: var(--yellow); }
+        .stat-label {
+            font-size: 10px; color: var(--muted);
+            letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4;
+        }
+        .hero-cta {
+            font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+            color: #000; background: var(--yellow);
+            padding: 13px 30px; border-radius: var(--radius);
+            transition: background var(--t), transform var(--t);
+        }
+        .hero-cta:hover { background: var(--off-white); transform: translateY(-2px); }
+        .scroll-hint {
+            position: absolute; bottom: 22px; right: 48px;
+            font-size: 10px; color: var(--muted);
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+
+        /* ── ABOUT ──────────────────────────────── */
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 72px; align-items: center;
+        }
+        .img-frame {
+            position: relative; border-radius: 6px;
+            overflow: hidden; aspect-ratio: 1;
+            background: var(--bg-card);
+        }
+        .img-frame img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(15%) contrast(1.05);
+            transition: transform 0.6s ease;
+        }
+        .img-frame:hover img { transform: scale(1.04); }
+        .img-badge {
+            position: absolute; bottom: 18px; right: 18px;
+            background: var(--yellow); color: #000;
+            font-family: var(--font-disp); font-size: 13px;
+            letter-spacing: 1px; text-align: center;
+            padding: 8px 14px; border-radius: 3px; line-height: 1.3;
+        }
+        .about-text h2 {
+            font-family: var(--font-disp);
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1.08; margin-bottom: 24px;
+        }
+        .about-text p {
+            font-size: 14px; color: rgba(240,237,230,0.65);
+            line-height: 1.8; margin-bottom: 14px;
+        }
+        .values-list { margin: 20px 0; list-style: none; }
+        .values-list li {
+            font-size: 13px; color: rgba(240,237,230,0.55);
+            padding: 8px 0; border-bottom: 1px solid var(--border);
+            display: flex; align-items: baseline; gap: 10px;
+        }
+        .values-list li::before {
+            content: '✦'; color: var(--yellow); font-size: 8px; flex-shrink: 0;
+        }
+        .values-list li strong { color: var(--off-white); font-weight: 500; }
+
+        /* ── WHY CHOOSE US ──────────────────────── */
+        .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+
+        /* ── CLIENTS STRIP ──────────────────────── */
+        .clients-strip {
+            padding: 64px 48px;
+            border-bottom: 1px solid var(--border);
+        }
+        .clients-strip .label {
+            font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 28px; display: block;
+        }
+        .client-names {
+            display: flex; flex-wrap: wrap; gap: 12px;
+        }
+        .client-pill {
+            font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 7px 16px; border-radius: 100px;
+            transition: color var(--t), border-color var(--t);
+        }
+        .client-pill:hover { color: var(--off-white); border-color: rgba(240,237,230,0.3); }
+
+        /* ── NUMBERS ────────────────────────────── */
+        .numbers-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+        .num-item {
+            padding: 40px 28px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+        .big-num {
+            font-family: var(--font-disp);
+            font-size: clamp(52px, 7vw, 88px);
+            line-height: 1; color: var(--yellow); display: inline-block;
+        }
+        .big-unit {
+            font-family: var(--font-disp);
+            font-size: clamp(28px, 4vw, 48px);
+            color: var(--off-white); opacity: 0.3; margin-left: 2px;
+        }
+        .num-item p { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 10px; }
+
+        @media (max-width: 1024px) {
+            .numbers-grid { grid-template-columns: repeat(2,1fr); }
+            .why-grid { grid-template-columns: repeat(2,1fr); }
+            .about-grid { grid-template-columns: 1fr; gap: 36px; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 110px 24px 52px; }
+            .hero-bottom { flex-direction: column; align-items: flex-start; }
+            .scroll-hint { right: 24px; }
+            .numbers-grid { grid-template-columns: repeat(2,1fr); }
+            .why-grid { grid-template-columns: 1fr; }
+            .clients-strip { padding: 48px 24px; }
+        }
+        @media (max-width: 480px) {
+            .hero { padding: 96px 20px 44px; }
+            .numbers-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- nav injected by nav.js -->
+
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-meta">
+        <span class="hero-tag">Precision Engineering</span>
+    </div>
+    <h1>
+        <span class="line1">RBK</span>
+        <span class="line2">Precision</span>
+    </h1>
+    <p class="hero-sub">
+        High-tolerance CNC &amp; VMC machining for industries<br>
+        that can't afford a single micron of error. Founded 2022.
+    </p>
+    <div class="hero-bottom">
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-num">25<em>+</em></span>
+                <span class="stat-label">Years Team<br>Expertise</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">±0.01<em>mm</em></span>
+                <span class="stat-label">Tolerance<br>Capability</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">6<em>+</em></span>
+                <span class="stat-label">Industries<br>Served</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">ISO</span>
+                <span class="stat-label">9001:2015<br>Certified</span>
+            </div>
+        </div>
+        <a href="services.html" class="hero-cta">Explore Services →</a>
+    </div>
+    <div class="scroll-hint">Scroll ↓</div>
+</section>
+
+<!-- ═══ TICKER ══════════════════════════════════════════ -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>CNC Turning ✦</span><span>VMC Milling ✦</span>
+        <span>Aerospace ✦</span><span>Automotive ✦</span>
+        <span>Medical Devices ✦</span><span>ISO 9001:2015 ✦</span>
+        <span>Bangalore, India ✦</span><span>Tight Tolerances ✦</span>
+        <span>Custom Machining ✦</span><span>Reverse Engineering ✦</span>
+        <span>CNC Turning ✦</span><span>VMC Milling ✦</span>
+        <span>Aerospace ✦</span><span>Automotive ✦</span>
+        <span>Medical Devices ✦</span><span>ISO 9001:2015 ✦</span>
+        <span>Bangalore, India ✦</span><span>Tight Tolerances ✦</span>
+        <span>Custom Machining ✦</span><span>Reverse Engineering ✦</span>
+    </div>
+</div>
+
+<!-- ═══ ABOUT ════════════════════════════════════════════ -->
+<section class="section">
+    <div class="section-label"><span class="sec-num">01</span><span class="sec-title">Who We Are</span></div>
+    <div class="about-grid">
+        <div class="img-frame">
+            <img src="Assets/Images/Home_Intro_Image.png" alt="RBK Precision CNC Machining">
+            <div class="img-badge">ISO 9001<br>:2015</div>
+        </div>
+        <div class="about-text">
+            <h2>We don't just machine parts.<br>We <em>engineer certainty.</em></h2>
+            <p>Founded in 2022, RBK Precision started as a family-owned machining shop with a clear mission — to deliver high-quality parts that exceed our clients' needs, on time and at fair prices.</p>
+            <p>Today, with 25+ years of combined team expertise, we've grown into a trusted name in CNC turning and milling — recognised for innovation, reliability, and customer focus.</p>
+            <ul class="values-list">
+                <li><strong>Quality &amp; Innovation</strong> — We build reliable parts and keep pushing for better ways to serve.</li>
+                <li><strong>Customer Focus</strong> — Your goals are our priority.</li>
+                <li><strong>Integrity</strong> — We do what's right, always.</li>
+                <li><strong>Continuous Improvement</strong> — We learn, grow, and improve every day.</li>
+            </ul>
+            <a href="services.html" class="text-link">Explore our services →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ NUMBERS ══════════════════════════════════════════ -->
+<section class="section">
+    <div class="section-label"><span class="sec-num">03</span><span class="sec-title">Numbers</span></div>
+    <h2 class="section-h2">Tolerances don't lie. <em>Neither do we.</em></h2>
+    <div class="numbers-grid">
+        <div class="num-item">
+            <span class="big-num" data-target="25">0</span><span class="big-unit">+</span>
+            <p>Years of combined team expertise in precision manufacturing</p>
+        </div>
+        <div class="num-item">
+            <span class="big-num" data-target="6">0</span><span class="big-unit">+</span>
+            <p>Industries served — Aerospace, Auto, Medical, Energy, Defence, Electronics</p>
+        </div>
+        <div class="num-item">
+            <span class="big-num" data-target="5">0</span><span class="big-unit">+</span>
+            <p>Trusted clients including GEA Westfalia Separator Pvt Ltd, Grotek Enterprises Pvt Ltd</p>
+        </div>
+        <div class="num-item">
+            <span class="big-num" data-target="10">0</span><span class="big-unit">+</span>
+            <p>Precision metrology instruments for in-house QC</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ WHY CHOOSE US ════════════════════════════════════ -->
+<section class="section alt">
+    <div class="section-label"><span class="sec-num">04</span><span class="sec-title">Why Choose RBK</span></div>
+    <h2 class="section-h2">We deliver performance,<br>reliability, <em>and peace of mind.</em></h2>
+    <div class="why-grid">
+        <div class="card">
+            <span class="card-num">— Technology</span>
+            <h3>Cutting-Edge Equipment <span class="arr">↗</span></h3>
+            <p>LMW and ACE CNC Machines, BFW VMC machines, and live tooling with C-axis machining. Advanced multi-axis capabilities for complex geometries.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— People</span>
+            <h3>Expert Workforce <span class="arr">↗</span></h3>
+            <p>Skilled machinists, engineers and technicians with 25+ years of combined experience, continuously trained on technology and best practices.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Standards</span>
+            <h3>Uncompromising Quality <span class="arr">↗</span></h3>
+            <p>ISO 9001:2015 certified. Quality isn't a checkpoint — it's built into every stage of our process from first article to final delivery.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Delivery</span>
+            <h3>Fast, Reliable Turnaround <span class="arr">↗</span></h3>
+            <p>Streamlined production workflows and smart scheduling. Your parts delivered on time — without compromising on quality or accuracy.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Partnership</span>
+            <h3>Customer-First Approach <span class="arr">↗</span></h3>
+            <p>We see clients as long-term partners. Proactive communication, real-time updates, and responsive solutions at every stage.</p>
+        </div>
+        <div class="card">
+            <span class="card-num">— Traceability</span>
+            <h3>Full Material Traceability <span class="arr">↗</span></h3>
+            <p>Detailed certification and material traceability reports on request — guaranteeing transparency and compliance with industry standards.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CLIENTS STRIP ════════════════════════════════════ -->
+<div class="clients-strip">
+    <span class="label">Trusted by industry leaders</span>
+    <div class="client-names">
+        <span class="client-pill">Grotek Enterprise Pvt. Ltd.</span>
+        <span class="client-pill">GEA Westfalia Separator India Pvt. Ltd.</span>
+        <span class="client-pill">EXA Thermometrics (India) Pvt. Ltd.</span>
+        <span class="client-pill">Automed Systems Pvt. Ltd.</span>
+        <span class="client-pill">Indophil Engineering Pvt. Ltd.</span>
+        <span class="client-pill">Bangalore Gauges</span>
+        <span class="client-pill">+ Many more</span>
+    </div>
+</div>
+
+<!-- ═══ CTA ══════════════════════════════════════════════ -->
+<section class="cta-section">
+    <div class="cta-inner">
+        <h2>Have a component <em>worth</em><br>machining precisely?</h2>
+        <div class="cta-links">
+            <a href="mailto:rbkprecision@gmail.com" class="cta-email">rbkprecision@gmail.com ↗</a>
+            <a href="contact.html" class="cta-btn">Send your drawing →</a>
+        </div>
+        <div class="cta-assurances">
+            <span>Reply within 24 hours</span>
+            <span>Fixed quotation — no hidden costs</span>
+            <span>First article inspection guaranteed</span>
+        </div>
+    </div>
+</section>
+
+<!-- footer injected by nav.js -->
+
+<script src="nav.js"></script>
+<script>
+    // Counter animation
+    const counters = document.querySelectorAll('.big-num');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = +el.dataset.target;
+            const step = target / (1800 / 16);
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) { el.textContent = target; clearInterval(timer); }
+                else { el.textContent = Math.floor(current); }
+            }, 16);
+            observer.unobserve(el);
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
